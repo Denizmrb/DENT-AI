@@ -18,7 +18,7 @@ from PySide6.QtWidgets import (
     QAbstractButton, QDialog, QHBoxLayout, QLabel, QLineEdit, QSizePolicy, QVBoxLayout, QWidget,
 )
 
-from dentai.auth import STRENGTH_LABELS, check_login, password_strength
+from dentai.auth import STRENGTH_LABELS, check_login, has_users, password_strength
 from dentai.ui import theme
 from dentai.ui.controls import _Anim, draw_icon, mix, qc
 from dentai.ui.logo import app_icon, draw_logo, tooth_path
@@ -605,6 +605,12 @@ class LoginDialog(QDialog):
         self.pw.returnPressed.connect(self.submit)
         self._pw_changed("")
         QTimer.singleShot(0, self.user.setFocus)
+        if not has_users():
+            self._no_users_hint()
+
+    def _no_users_hint(self):
+        self.error.setText("Kullanıcı yok: python -m dentai.auth ekle <ad>")
+        self.error.setToolTip("Kullanıcılar kayitlar/kullanicilar.json dosyasında tutulur.")
 
     @staticmethod
     def _caption(text: str) -> QLabel:
@@ -667,6 +673,9 @@ class LoginDialog(QDialog):
     # ---- giriş ------------------------------------------------------------------------
     def submit(self):
         if self.btn.state != "idle":
+            return
+        if not has_users():
+            self._no_users_hint()
             return
         if not self.user.text().strip() or not self.pw.text():
             self.error.setText("Kullanıcı adı ve şifre gerekli.")

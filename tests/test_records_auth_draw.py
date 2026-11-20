@@ -1,19 +1,35 @@
+import re
+from pathlib import Path
+
 import numpy as np
 
-from dentai.auth import check_login, password_strength
+from dentai.auth import check_login, has_users, load_users, password_strength, remove_user, set_user
 from dentai.inference.draw import draw_analysis
 from dentai.inference.results import AnalysisResult, Detection
 from dentai.records import GENERAL, NotesStore, PatientStore
 
 
-def test_login():
-    assert check_login("deniz123456", "1548Deniz?")
-    assert check_login(" Deniz123456 ", "1548Deniz?")    # kullanıcı adı büyük/küçük harf duyarsız
-    assert not check_login("deniz123456", "1548deniz?")  # şifre duyarlı
-    assert not check_login("deniz123456", "1548Deniz")
-    assert not check_login("deniz", "1548Deniz")         # eski bilgiler artık geçmez
-    assert not check_login("baska", "1548Deniz?")
-    assert not check_login("", "")
+def test_login(tmp_path):
+    f = tmp_path / "kullanicilar.json"
+    assert not has_users(f) and not check_login("ali", "x", f)
+    set_user("Ali", "Gizli-Sifre1", f)
+    assert check_login("ali", "Gizli-Sifre1", f)
+    assert check_login(" ALI ", "Gizli-Sifre1", f)        # kullanıcı adı büyük/küçük harf duyarsız
+    assert not check_login("ali", "gizli-sifre1", f)      # şifre duyarlı
+    assert not check_login("veli", "Gizli-Sifre1", f)
+    assert "Gizli-Sifre1" not in f.read_text()            # düz metin saklanmaz
+    set_user("ali", "Yeni-Sifre2", f)                     # şifre değiştirme
+    assert check_login("ali", "Yeni-Sifre2", f) and not check_login("ali", "Gizli-Sifre1", f)
+    set_user("veli", "Baska-Sifre3", f)
+    a, v = load_users(f)["ali"], load_users(f)["veli"]
+    assert a["salt"] != v["salt"]                         # her kullanıcının kendi tuzu var
+    assert remove_user("veli", f) and not check_login("veli", "Baska-Sifre3", f)
+
+
+def test_no_credentials_in_source():
+    import dentai.auth as auth
+    src = Path(auth.__file__).read_text(encoding="utf-8")
+    assert not re.search(r"[0-9a-f]{64}", src), "kaynak kodda şifre özeti olmamalı"
 
 
 def test_password_strength_order():

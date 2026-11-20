@@ -79,14 +79,20 @@ models/findings_best.pt   bulgu modeli
 
 ## Kullanım
 
+İlk çalıştırmadan önce bir kullanıcı oluşturulur (şifre ekranda görünmeden sorulur):
+
+```powershell
+.\.venv\Scripts\python.exe -m dentai.auth ekle kullanici_adi
+```
+
+Aynı komut şifre değiştirmek için de kullanılır. `sil <ad>` kullanıcıyı siler, `liste` kullanıcıları gösterir.
+
 ```powershell
 .\.venv\Scripts\python.exe app.py                 # arayüz
 .\.venv\Scripts\python.exe predict.py --source xray.jpg --show   # komut satırı
 ```
 
-Giriş bilgileri [dentai/auth.py](dentai/auth.py) içinde tanımlıdır. Şifre düz metin olarak değil, PBKDF2 özeti olarak tutulur.
-
-Hasta kayıtları ve notlar proje içindeki `kayitlar/` klasörüne kaydedilir. Bu klasör `.gitignore` ile depo dışında tutulur.
+Kullanıcılar, hasta kayıtları ve hekim notları proje içindeki `kayitlar/` klasöründe tutulur ve `.gitignore` ile depo dışında kalır. Şifreler düz metin olarak değil, kullanıcıya özel tuzla PBKDF2 özeti olarak saklanır.
 
 ## Model eğitimi
 
