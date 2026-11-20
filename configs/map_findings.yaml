@@ -1,0 +1,18 @@
+# 31 sınıflı veri setinden bulgu modeline eşleme: kaynak_sınıf_adı: hedef_sınıf
+# Burada yazmayan sınıflar (Malaligned, Mandibular Canal, Wire, ...) eğitime ALINMAZ.
+# Hedef adlar configs/classes.yaml içinde. Büyük/küçük harf ve boşluk/tire farkı önemli değil.
+caries: caries
+filling: filling
+crown: crown
+implant: implant
+root canal treatment: root_canal_treatment
+impacted tooth: impacted
+
+# DENTEX (MICCAI 2023) adları. DİKKAT: DENTEX kutuları lezyonu değil hastalıklı dişin tamamını kapsar.
+deep caries: caries
+impacted: impacted
+# periapical lesion: yeni "lezyon" sınıfı açılırsa eşlenir; şimdilik eğitime alınmaz
+
+# İsterseniz sonradan açabilirsiniz (önce classes.yaml'a sınıf ekleyin):
+# post-core: filling          # ayrı sınıf değil, restorasyon sayılırsa
+# periapical lesion: ...      # yeni "lezyon" grubu gerekir

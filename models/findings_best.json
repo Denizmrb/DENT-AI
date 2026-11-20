@@ -1,0 +1,1 @@
+{"task": "findings", "imgsz": 1024, "clahe": true, "names": {"0": "caries", "1": "filling", "2": "crown", "3": "implant", "4": "root_canal_treatment", "5": "impacted"}}

@@ -1,0 +1,18 @@
+# Bulgu (findings) modelinin sınıfları. Sıra = YOLO sınıf id'si.
+# Renkler RGB; çizimde BGR'ye çevrilir. Diş numaralandırma modeli (32 FDI sınıfı) dentai/fdi.py içinde.
+#
+# Not: Erken/ileri evre çürük ve gömülü diş pozisyonu (vertikal/horizontal...) bu sürümde YOK;
+# kullanılan veri setinde yalnızca tek "Caries" ve tek "Impacted tooth" sınıfı var.
+# Bu ayrımlar için ayrıca etiketli veri gerekir (bkz. docs/ARCHITECTURE.md).
+groups:
+  caries:      {label: Çürük,        color: [255, 77, 77]}
+  restoration: {label: Restorasyon,  color: [56, 189, 248]}
+  impacted:    {label: Gömülü diş,   color: [192, 132, 252]}
+
+findings:
+  - {name: caries,                 label: Çürük,                 group: caries,      color: [255, 59, 48]}
+  - {name: filling,                label: Dolgu,                 group: restoration, color: [56, 189, 248]}
+  - {name: crown,                  label: Kuron,                 group: restoration, color: [45, 212, 191]}
+  - {name: implant,                label: İmplant,               group: restoration, color: [96, 125, 255]}
+  - {name: root_canal_treatment,   label: Kanal tedavisi,        group: restoration, color: [34, 197, 94]}
+  - {name: impacted,               label: Gömülü diş,            group: impacted,    color: [192, 132, 252]}

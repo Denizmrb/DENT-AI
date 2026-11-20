@@ -1,0 +1,45 @@
+# Görev bazlı YOLO veri artırımı. Doğrudan model.train(**...) içine açılır.
+#
+# teeth (FDI numaralandırma):
+#   - fliplr = 0   : yatay çevirme 18<->28 gibi sağ/sol sınıfları yer değiştirir, etiketleri bozar.
+#   - mosaic = 0   : numaralandırma "çenenin neresindeyim" bağlamına dayanır; mozaik bu bağlamı kırar.
+# findings (çürük / restorasyon / gömülü):
+#   - fliplr = 0.5 : bulgu türleri yan-bağımsızdır (mezyal/distal çevirmede korunur).
+#   - mosaic = 1.0 : küçük ve nadir bulgular için en faydalı artırım; son 10 epoch kapatılır.
+# Ortak: gri tonlamalı görüntü için hsv_h/hsv_s = 0, sadece parlaklık (hsv_v) oynatılır.
+teeth:
+  hsv_h: 0.0
+  hsv_s: 0.0
+  hsv_v: 0.25
+  degrees: 5.0
+  translate: 0.05
+  scale: 0.20
+  shear: 0.0
+  perspective: 0.0
+  flipud: 0.0
+  fliplr: 0.0
+  mosaic: 0.0
+  mixup: 0.0
+  close_mosaic: 0
+  # kayıp ağırlıkları (CIoU box / BCE cls / DFL) - YOLOv8 varsayılanları
+  box: 7.5
+  cls: 0.5
+  dfl: 1.5
+
+findings:
+  hsv_h: 0.0
+  hsv_s: 0.0
+  hsv_v: 0.30
+  degrees: 7.0
+  translate: 0.10
+  scale: 0.40
+  shear: 1.0
+  perspective: 0.0
+  flipud: 0.0
+  fliplr: 0.5
+  mosaic: 1.0
+  mixup: 0.0
+  close_mosaic: 10
+  box: 7.5
+  cls: 0.7      # nadir sınıflar için sınıflandırma kaybı biraz yükseltildi
+  dfl: 1.5

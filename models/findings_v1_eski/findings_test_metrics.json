@@ -1,0 +1,12 @@
+{
+  "mAP50": 0.6615,
+  "mAP50-95": 0.3172,
+  "AP50_per_class": {
+    "caries": 0.2774,
+    "filling": 0.495,
+    "crown": 0.8001,
+    "implant": 0.9241,
+    "root_canal_treatment": 0.5719,
+    "impacted": 0.9007
+  }
+}

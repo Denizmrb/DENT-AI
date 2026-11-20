@@ -1,0 +1,14 @@
+﻿# yerel ortam ve üretilen dosyalar
+.venv/
+__pycache__/
+build/
+runs/
+raw/
+datasets/
+outputs/
+*.pt
+.pytest_cache/
+# hasta kayıtları, hekim notları ve hata günlüğü: kişisel sağlık verisi, depoya girmez
+kayitlar/
+logs/
+
